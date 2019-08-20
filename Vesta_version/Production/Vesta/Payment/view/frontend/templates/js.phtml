@@ -1,0 +1,25 @@
+<?php
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Vesta\Payment\Block\Fingerprint */
+?>
+<?php if ($block->isSession()){?>
+<script type="text/javascript"> 
+require(['https://collectorsvc.ecustomersupport.com/DCCSProxy/Service/fetch/an/<?php echo $block->getAccountName(); ?>/ws/<?php echo $block->getSessionId(); ?>/ep/vdccs.js'], function(v){
+        if (window.requestIdleCallback) {
+          requestIdleCallback(function() {
+            v.getV18({}, function(components) {
+              vStream.getFP(components);
+            });
+          });
+        } else {
+          setTimeout(function() {
+            v.getV18({}, function(components) {
+              vStream.getFP(components);
+            });
+          }, 500);
+        }
+      });
+ </script>
+ <?php } ?>

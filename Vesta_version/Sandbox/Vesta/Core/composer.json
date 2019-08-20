@@ -1,0 +1,17 @@
+{
+    "name": "vestacorporation/module-core",
+    "description": "Required for Vesta Payment or Guarantee module",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+		"OSL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Vesta\\Core\\": ""
+        }
+    }
+}

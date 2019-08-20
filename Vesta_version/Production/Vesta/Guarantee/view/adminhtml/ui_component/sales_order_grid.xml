@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="sales_order_columns">
+        <column name="vesta_guarantee_response" class="Vesta\Guarantee\Ui\Component\vSafeGridColoumn\VsafeStatus">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Vesta Risk Probability Index</item>
+                    <item name="sortOrder" xsi:type="number">99</item>
+                </item>
+            </argument>
+        </column>
+		<column name="vesta_guarantee_status" class="Vesta\Guarantee\Ui\Component\vSafeGridColoumn\GuaranteeStatus">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Vesta Guarantee Decision</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

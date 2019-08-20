@@ -1,0 +1,28 @@
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title">Vesta Guaranteed Information</span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <div class="admin__page-section-item-title">
+                <span class="title">Guaranteed Summary</span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-information-table">
+                <tr>
+                    <th>Vesta Risk Probability Index:</th>
+                    <td><?php echo $block->escapeHtml($block->getVestaRiskProbabilityIndex()); ?></td>
+                </tr>
+                <tr>
+                    <th>Guarantee Decision:</th>
+                    <td><?php echo $block->escapeHtml($block->getVestaGuaranteeStatus()); ?></td>
+                </tr>
+                <tr>
+                    <th>Order Status:</th>
+                    <td><?php echo $block->escapeHtml($block->getOrderStatus()); ?> </td>
+                </tr>                
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

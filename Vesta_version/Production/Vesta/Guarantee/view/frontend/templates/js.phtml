@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Vesta\Guarantee\Block\Fingerprint */
+?>
+<?php
+$blockObj= $block->getLayout()->createBlock('Vesta\Guarantee\Block\Fingerprint');
+?>
+<?php if ($blockObj->isModuleActive()): ?>
+<script type="text/javascript"> 
+require(['https://collectorsvc.ecustomersupport.com/DCCSProxy/Service/fetch/an/<?php echo $blockObj->getAccountName(); ?>/ws/<?php echo $blockObj->getSessionId(); ?>/ep/vdccs.js'], function(v){
+        if (window.requestIdleCallback) {
+          requestIdleCallback(function() {
+            v.getV18({}, function(components) {
+              vStream.getFP(components);
+            });
+          });
+        } else {
+          setTimeout(function() {
+            v.getV18({}, function(components) {
+              vStream.getFP(components);
+            });
+          }, 500);
+        }
+      });
+ </script>
+<?php endif; ?>

@@ -1,0 +1,17 @@
+Not applicable,Vesta guarantee is not applicable for payment method  
+vesta error response,error in Vesta guarantee - 
+vesta guarantee config error - username,Vesta guarantee username is empty
+vesta guarantee config error - password,Vesta guarantee password is empty
+vesta guarantee config error - endpoint,Vesta guarantee endPointUrl is empty
+vesta guarantee config error - merchantrouting,Vesta guarantee merchantRoutingID is empty
+vesta guarantee config error - partnercustomerkey,Vesta guarantee partnerCustomerKey is empty
+vesta guarantee config error - acquirerCD,Vesta guarantee AcquirerCD is empty
+vesta auth error,Vesta guarantee authentication error
+vesta guarantee api error,Vesta guarantee api error - 
+vesta guarantee module response,Vesta guarantee response - 
+order placed with vesta guarantee,Vesta Guarantee call successful.
+vesta parameters empty,Vesta guarantee parameters is empty
+vesta guarantee risk info is invalid,Vesta  guarantee risk information is invalid
+vesta guarantee empty response,Empty response received from API
+XMLReader class not found!,XMLReader class not found!
+"Schema is Missing, Please add schema to feedSchema property","Schema is Missing, Please add schema to feedSchema property"

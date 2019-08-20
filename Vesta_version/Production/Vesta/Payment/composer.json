@@ -1,0 +1,31 @@
+{
+    "name": "vestacorporation/module-payment",
+    "description": "magento 2 payment module from vesta corporation",
+    "require": {
+        "magento/framework": ">=100 <103",
+        "magento/module-catalog": ">=101 <104",
+        "magento/module-backend": ">=100 <102",
+        "magento/module-checkout": "100.*",
+        "magento/module-config": ">=100 <103",
+        "magento/module-customer": ">=100 <103",
+        "magento/module-payment": "100.*",
+        "magento/module-quote": ">=100 <102",
+        "magento/module-sales": ">=100 <103",
+        "magento/module-ui": ">=100 <102",
+        "magento/module-vault": "101.*",
+		"vestacorporation/module-core": "1.0.0"
+    },
+    "type": "magento2-module",
+    "version": "1.0.1",
+    "license": [
+		"OSL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Vesta\\Payment\\": ""
+        }
+    }
+}

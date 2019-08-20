@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Vesta_Core::menu" title="Vesta" module="Vesta_Core" sortOrder="50" resource="Vesta_Core::menu"/>
+		<add id="Vesta_Core::logger" title="Logs" module="Vesta_Core" sortOrder="130" resource="Vesta_Core::logs" parent="Vesta_Core::menu"/>
+		<add id="Vesta_Guarantee::guarantee" title="Vesta Guarantee Logs" module="Vesta_Guarantee" sortOrder="140" resource="Vesta_Guarantee::vesta_guarantee" parent="Vesta_Core::logger" action="vesta_guarantee/logs/index"/>
+		<add id="Vesta_Payment::log" title="Vesta Payment Logs" module="Vesta_Payment" sortOrder="150" action="vesta_payment/logs/index" parent="Vesta_Core::logger" resource="Magento_Backend::content" />
+		<add id="Vesta_Core::settings" title="Settings" module="Vesta_Core" sortOrder="160" resource="Vesta_Core::logs" parent="Vesta_Core::menu"/>
+		<add id="Vesta_Core::guarantee" title="Vesta Guarantee" module="Vesta_Guarantee" sortOrder="170" action="adminhtml/system_config/edit/section/vesta_protection" resource="Vesta_Guarantee::vesta_guarantee" parent="Vesta_Core::settings"/>
+		<add id="Vesta_Core::payment" title="Vesta Payment" module="Vesta_Payment" sortOrder="180" action="adminhtml/system_config/edit/section/payment" resource="Magento_Payment::payment" parent="Vesta_Core::settings"/>
+        <add id="Vesta_Core::documentation" title="Documentations" module="Vesta_Core" sortOrder="999" resource="Vesta_Core::documentation" parent="Vesta_Core::menu"/>
+        <add id="Vesta_Core::userguide" title="User Guides" module="Vesta_Core" sortOrder="20" action="vesta_core/user/index" resource="Vesta_Core::userguide" parent="Vesta_Core::documentation"/>
+    </menu>
+</config>
