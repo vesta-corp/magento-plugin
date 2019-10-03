@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="payment_method_assign_data_vesta_payment">
+        <observer name="vesta_payment_gateway_data_assign" instance="Vesta\Payment\Observer\PaymentDataAssignObserver" />
+    </event>
+    <event name="controller_action_predispatch">
+        <observer name="vesta_payment_observer_getsessiontags" instance="Vesta\Payment\Observer\DataCollectorSession" />
+    </event>
+</config>

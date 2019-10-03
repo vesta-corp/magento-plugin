@@ -1,0 +1,29 @@
+<?php
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Vesta\Payment\Block\Fingerprint */
+?>
+<?php
+$blockObj = $block->getLayout()->createBlock('Vesta\Payment\Block\Fingerprint');
+?>
+<?php if (!$blockObj->isGuaranteeEnabled()) { ?>
+<?php $dc_url = $blockObj->getDCURL(); ?>
+<script type="text/javascript">
+  require(['<?php echo $dc_url; ?>/ws/<?php echo $blockObj->getSessionId(); ?>/ep/vdccs.js'], function(v) {
+    if (window.requestIdleCallback) {
+      requestIdleCallback(function() {
+        v.getV18({}, function(components) {
+          vStream.getFP(components);
+        });
+      });
+    } else {
+      setTimeout(function() {
+        v.getV18({}, function(components) {
+          vStream.getFP(components);
+        });
+      }, 500);
+    }
+  });
+</script>
+<?php } ?>

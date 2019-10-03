@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_submit_all_after">
+        <observer name="vesta_guarantee_observer_fraudstatusdispatcher" instance="Vesta\Guarantee\Observer\FraudStatusDispatcher" />
+    </event>
+    <event name="controller_action_predispatch">
+        <observer name="vesta_guarantee_observer_getsessiontags" instance="Vesta\Guarantee\Observer\GetSessionTags" />
+    </event>
+</config>

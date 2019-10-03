@@ -1,0 +1,12 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="vesta_admin_guarantee" frontName="vsafetab">
+            <module name="Vesta_Guarantee" />
+        </route>		
+		<route frontName="vesta_guarantee" id="vesta_guarantee">
+			<module name="Vesta_Guarantee"/>
+		</route>
+
+    </router>
+</config>
+

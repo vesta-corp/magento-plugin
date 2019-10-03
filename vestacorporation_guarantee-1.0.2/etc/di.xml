@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+               <item name="vesta_guarantee_response" xsi:type="string">sales_order.vesta_guarantee_response</item>
+			   <item name="vesta_guarantee_status" xsi:type="string">sales_order.vesta_guarantee_status</item>
+            </argument>
+        </arguments>
+    </virtualType>
+ <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="vesta_guarantee_logs_listing_data_source" xsi:type="string">Vesta\Guarantee\Model\ResourceModel\Logs\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<virtualType name="Vesta\Guarantee\Model\ResourceModel\Logs\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">vesta_guarantee_logs</argument>
+            <argument name="resourceModel" xsi:type="string">Vesta\Guarantee\Model\ResourceModel\Logs</argument>
+        </arguments>
+    </virtualType>
+	
+</config>
