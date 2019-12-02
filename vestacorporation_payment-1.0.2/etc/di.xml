@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Payment Method Facade configuration -->
+    <virtualType name="VestaPaymentFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Vesta\Payment\Model\Ui\PaymentConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Vesta\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Vesta\Payment\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">VestaPaymentValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">VestaPaymentCommandPool</argument>
+        </arguments>
+    </virtualType>
+	<!-- Start Configuration for Vault payments -->
+	<virtualType name="VestaVaultPaymentConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Vesta\Payment\Model\Ui\PaymentConfigProvider::CC_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaVaultPaymentValueHandler" type="VaultPaymentDefaultValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">VestaVaultPaymentConfig</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaVaultPaymentValueHandlerPool" type="VaultPaymentValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">VestaVaultPaymentValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaCreditCardVaultFacade" type="Magento\Vault\Model\Method\Vault">
+        <arguments>
+            <argument name="config" xsi:type="object">VestaVaultPaymentConfig</argument>
+            <argument name="valueHandlerPool" xsi:type="object">VestaVaultPaymentValueHandlerPool</argument>
+            <argument name="vaultProvider" xsi:type="object">VestaPaymentFacade</argument>
+            <argument name="code" xsi:type="const">Vesta\Payment\Model\Ui\PaymentConfigProvider::CC_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+	<!-- END Configuration for Vault payments -->
+    <!-- Configuration reader -->
+    <virtualType name="VestaPaymentConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Vesta\Payment\Model\Ui\PaymentConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+    <!-- Logger, initialized with VestaPaymentGatewayConfig -->
+    <virtualType name="VestaPaymentLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">VestaPaymentConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Vesta\Payment\Gateway\Http\Client\ClientMock">
+        <arguments>
+            <argument name="logger" xsi:type="object">VestaPaymentLogger</argument>
+        </arguments>
+    </type>
+    <!-- Commands infrastructure -->
+    <virtualType name="VestaPaymentCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">VestaPaymentAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">VestaPaymentCaptureCommand</item>
+				<item name="vault_authorize" xsi:type="string">VestaVaultAuthorizeCommand</item>
+                <item name="vault_capture" xsi:type="string">VestaVaultCaptureCommand</item>
+                <item name="void" xsi:type="string">VestaPaymentVoidCommand</item>
+				<item name="refund" xsi:type="string">VestaPaymentRefundCommand</item>
+                <item name="cancel" xsi:type="string">VestaPaymentVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Authorize command -->
+    <virtualType name="VestaPaymentAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">VestaPaymentAuthorizationRequest</argument>
+            <argument name="client" xsi:type="object">Vesta\Payment\Gateway\Http\Client\ClientTransactionAuthorize</argument>
+			<argument name="validator" xsi:type="object">Vesta\Payment\Gateway\Validator\ResponseDataValidator</argument>
+			<argument name="handler" xsi:type="object">VestaPaymentAuthorizationHandler</argument>
+			<argument name="transferFactory" xsi:type="object">Vesta\Payment\Gateway\Http\PaymentTransferFactory</argument>
+        </arguments>
+    </virtualType>
+    <!-- Authorization Request -->
+    <virtualType name="VestaPaymentAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+				<item name="customer" xsi:type="string">Vesta\Payment\Gateway\Request\CustomerDetailsBuilder</item>
+				<item name="payment" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentDetailsBuilder</item>
+				<item name="vault" xsi:type="string">Vesta\Payment\Gateway\Request\VaultPaymentDataBuilder</item>
+				<item name="transaction" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentAuthorizationRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+	<!-- Vault Authorize command -->
+    <virtualType name="VestaVaultAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">VestaVaultAuthorizationRequest</argument>
+            <argument name="client" xsi:type="object">Vesta\Payment\Gateway\Http\Client\ClientTransactionAuthorize</argument>
+			<argument name="validator" xsi:type="object">Vesta\Payment\Gateway\Validator\ResponseDataValidator</argument>
+			<argument name="handler" xsi:type="object">VestaVaultResponseHandler</argument>
+			<argument name="transferFactory" xsi:type="object">Vesta\Payment\Gateway\Http\PaymentTransferFactory</argument>
+			
+        </arguments>
+    </virtualType>
+    <!-- Vault Authorization Request -->
+    <virtualType name="VestaVaultAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+				<item name="customer" xsi:type="string">Vesta\Payment\Gateway\Request\CustomerDetailsBuilder</item>
+				<item name="payment" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentDetailsBuilder</item>
+				<item name="transaction" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentAuthorizationRequest</item>
+				
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaPaymentCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">VestaPaymentCaptureRequest</argument>
+            <argument name="client" xsi:type="object">Vesta\Payment\Gateway\Http\Client\ClientTransactionSettlement</argument>
+			<argument name="validator" xsi:type="object">Vesta\Payment\Gateway\Validator\ResponseDataValidator</argument>
+			<argument name="handler" xsi:type="object">VestaPaymentAuthorizationHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Vesta\Payment\Gateway\Http\PaymentTransferFactory</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaPaymentCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Vesta\Payment\Gateway\Request\CustomerDetailsBuilder</item>
+				<item name="payment" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentDetailsBuilder</item>
+				<item name="vault_capture" xsi:type="string">Vesta\Payment\Gateway\Request\VaultPaymentDataBuilder</item>
+                <item name="capture" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentCaptureDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+	<!-- Vault Capture command -->
+    <virtualType name="VestaVaultCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">VestaVaultCaptureRequest</argument>
+            <argument name="client" xsi:type="object">Vesta\Payment\Gateway\Http\Client\ClientTransactionSettlement</argument>
+			<argument name="validator" xsi:type="object">Vesta\Payment\Gateway\Validator\ResponseDataValidator</argument>
+            <argument name="handler" xsi:type="object">Vesta\Payment\Gateway\Response\TransactionDataHandler</argument>
+			<argument name="transferFactory" xsi:type="object">Vesta\Payment\Gateway\Http\PaymentTransferFactory</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaVaultCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="customer" xsi:type="string">Vesta\Payment\Gateway\Request\CustomerDetailsBuilder</item>
+				<item name="payment" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentDetailsBuilder</item>
+                <item name="capture" xsi:type="string">Vesta\Payment\Gateway\Request\PaymentCaptureDataBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- END Vesta commands  -->
+	<!-- Refund Command -->
+    <virtualType name="VestaPaymentRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="client" xsi:type="object">Vesta\Payment\Gateway\Http\Client\ClientTransactionRefund</argument>
+            <argument name="requestBuilder" xsi:type="object">Vesta\Payment\Gateway\Request\PaymentRefundDataBuilder</argument>
+            <argument name="handler" xsi:type="object">Vesta\Payment\Gateway\Response\RefundDataHandler</argument>
+			<argument name="validator" xsi:type="object">Vesta\Payment\Gateway\Validator\ResponseDataValidator</argument>
+			<argument name="transactionHandler" xsi:type="object">Vesta\Payment\Gateway\Response\TransactionDataHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Vesta\Payment\Gateway\Http\PaymentTransferFactory</argument>
+        </arguments>
+    </virtualType>
+    <!-- Void command -->
+    <virtualType name="VestaPaymentVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+			<argument name="client" xsi:type="object">Vesta\Payment\Gateway\Http\Client\ClientTransactionVoid</argument>
+            <argument name="requestBuilder" xsi:type="object">Vesta\Payment\Gateway\Request\VoidPaymentDataBuilder</argument>
+            <argument name="handler" xsi:type="object">Vesta\Payment\Gateway\Response\VoidDataHandler</argument>
+            <argument name="validator" xsi:type="object">Vesta\Payment\Gateway\Validator\ResponseDataValidator</argument>
+            <argument name="transferFactory" xsi:type="object">Vesta\Payment\Gateway\Http\PaymentTransferFactory</argument>
+        </arguments>
+    </virtualType>
+    <!-- Void Request -->
+    <type name="Vesta\Payment\Gateway\Request\VoidRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">VestaPaymentConfig</argument>
+        </arguments>
+    </type>
+	<!-- Value handlers infrastructure -->
+    <type name="Vesta\Payment\Gateway\Response\VaultDataHandler">
+        <arguments>
+            <argument name="paymentTokenFactory" xsi:type="object">Magento\Vault\Model\CreditCardTokenFactory</argument>
+        </arguments>
+    </type>
+	<!-- Vault Authorization command -->
+    <!-- Response handlers -->
+    <virtualType name="VestaPaymentAuthorizationHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Vesta\Payment\Gateway\Response\PaymentDataHandler</item>
+                <item name="txn_id" xsi:type="string">Vesta\Payment\Gateway\Response\TransactionDataHandler</item>
+				<item name="vault_details" xsi:type="string">Vesta\Payment\Gateway\Response\VaultDataHandler</item>
+			</argument>
+        </arguments>
+    </virtualType>
+	<virtualType name="VestaVaultResponseHandler" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="payment_details" xsi:type="string">Vesta\Payment\Gateway\Response\PaymentDataHandler</item>
+                <item name="txn_id" xsi:type="string">Vesta\Payment\Gateway\Response\TransactionDataHandler</item>
+			</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure -->
+    <virtualType name="VestaPaymentValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">VestaPaymentConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="VestaPaymentConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">VestaPaymentConfig</argument>
+        </arguments>
+    </virtualType>
+	<type name="Vesta\Payment\Model\Ui\PaymentConfigProvider">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Vesta\Payment\Block\Info">
+        <arguments>
+            <argument name="config" xsi:type="object">VestaPaymentConfig</argument>
+        </arguments>
+    </type>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="vesta_payment_logs_listing_data_source" xsi:type="string">Vesta\Payment\Model\ResourceModel\Logs\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+	<virtualType name="Vesta\Payment\Model\ResourceModel\Logs\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">vesta_payment_logs</argument>
+            <argument name="resourceModel" xsi:type="string">Vesta\Payment\Model\ResourceModel\Logs</argument>
+        </arguments>
+    </virtualType>
+	
+</config>

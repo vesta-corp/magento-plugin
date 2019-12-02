@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<vesta_protection>
+			<general>
+				<enable>0</enable>
+				<end_point_url>https://vsafesandbox.ecustomersupport.com/GatewayV4Proxy/Service/</end_point_url>
+				<merchant_routing_id>FRD-ALL-GUAR</merchant_routing_id>
+				<acquirer_cd>1</acquirer_cd>
+				<autodisposition>0</autodisposition>
+				<vesta_fraud_api>ChargePaymentFraudRequest</vesta_fraud_api>
+				<vesta_session_tag_api>GetSessionTags</vesta_session_tag_api>
+			</general>
+		</vesta_protection>
+		<payment_processer_codes>
+			<vesta_payment>
+				<acquirer_auth_res_code>AcquirerApprovalCode</acquirer_auth_res_code>
+				<acquirer_avs_res_code>AcquirerAVSResponseCode</acquirer_avs_res_code>
+				<acquirer_cvv_res_code>AcquirerCVVResponseCode</acquirer_cvv_res_code>
+			</vesta_payment>
+			<authorizenet_acceptjs>
+				<acquirer_auth_res_code>authCode</acquirer_auth_res_code>
+				<acquirer_avs_res_code>avsResultCode</acquirer_avs_res_code>
+				<acquirer_cvv_res_code>cvvResultCode</acquirer_cvv_res_code>
+			</authorizenet_acceptjs>
+			<braintree>
+				<acquirer_auth_res_code>processorResponseCode</acquirer_auth_res_code>
+				<acquirer_avs_res_code>avsPostalCodeResponseCode</acquirer_avs_res_code>
+				<acquirer_cvv_res_code>cvvResponseCode</acquirer_cvv_res_code>
+			</braintree>
+		</payment_processer_codes>
+	</default>
+</config>

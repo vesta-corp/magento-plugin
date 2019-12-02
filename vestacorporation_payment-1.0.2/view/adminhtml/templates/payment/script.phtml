@@ -1,0 +1,25 @@
+<?php
+
+/** @var Vesta\Payment\Block\Payment $block */
+
+$code = $block->escapeHtml($block->getCode());
+
+?>
+<script>
+    //<![CDATA[
+    require(
+        [
+            'Vesta_Payment/js/vestapayment',
+            'jquery',
+            'domReady!'
+        ],
+        function(Vesta, $) {
+            var config = <?= /* @noEscape */ $block->getPaymentConfig() ?>,
+                payment,
+                form = $('#payment_form_<?= /* @noEscape */ $code ?>');
+
+            config.active = form.length > 0 && !form.is(':hidden');
+            payment = new Vesta(config);
+        });
+    //]]>
+</script> 

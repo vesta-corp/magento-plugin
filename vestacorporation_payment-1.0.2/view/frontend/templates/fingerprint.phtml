@@ -1,0 +1,17 @@
+<?php
+
+// @codingStandardsIgnoreFile
+
+/** @var $block Vesta\Payment\Block\Fingerprint */
+?>
+<?php if ($block->isSession() && !$block->isGuaranteeEnabled()) { ?>
+<!--Begin payment fingerprinting tags below-->
+<p style="background:url('https://fingerprint.ecustomerpayments.com/ThreatMetrixUIRedirector/fp/clear.png?org_id=<?=$block->escapeHtml($block->getOrgId()) ?>&session_id=<?=$block->escapeHtml($block->getSessionId()) ?>&m=1')"></p>
+<img style="height:0px !important;" src="https://fingerprint.ecustomerpayments.com/ThreatMetrixUIRedirector/fp/clear.png?org_id=<?=$block->escapeHtml($block->getOrgId()) ?>&session_id=<?=$block->escapeHtml($block->getSessionId()) ?>&m=2" alt=""/>
+<script src="https://fingerprint.ecustomerpayments.com/ThreatMetrixUIRedirector/fp/check.js?org_id=<?=$block->escapeHtml($block->getOrgId()) ?>&session_id=<?=$block->escapeHtml($block->getSessionId()) ?>" type="text/javascript"></script>
+<object style="height:0px !important;" data ="https://fingerprint.ecustomerpayments.com/ThreatMetrixUIRedirector/fp/fp.swf?org_id=<?=$block->escapeHtml($block->getOrgId()) ?>&session_id=<?=$block->escapeHtml($block->getSessionId()) ?>" type="application/x-shockwave-flash" width="1" height="1" id="obj_id">
+  <param value="https://fingerprint.ecustomerpayments.com/ThreatMetrixUIRedirector/fp/fp.swf?org_id=<?=$block->escapeHtml($block->getOrgId()) ?>&session_id=<?=$block->escapeHtml($block->getSessionId()) ?>" name="movie"/>
+</object>
+ <!--End payment fingerprinting-->
+<style>.checkout-index-index header {margin-top: -20px !important;}.checkout-index-index > p {margin-top: 0 !important; margin-bottom: 0 !important;}</style>
+<?php } ?>

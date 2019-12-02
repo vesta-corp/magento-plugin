@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <vesta_payment>
+                <model>VestaPaymentFacade</model>
+                <payment_action>authorize_capture</payment_action>
+                <title>Vesta Payment</title>
+                <debug>1</debug>
+                <active>0</active>
+                <is_gateway>1</is_gateway>
+                <can_use_checkout>1</can_use_checkout>
+                <can_authorize>1</can_authorize>
+                <can_authorize_vault>1</can_authorize_vault>
+                <can_capture>1</can_capture>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_use_internal>1</can_use_internal>
+                <cctypes>AE,DI,DN,JCB,MC,MD,MI,SM,SO,VI</cctypes>
+                <useccv>1</useccv>
+                <order_status>processing</order_status>
+                <save_card>1</save_card>
+                <ssl>1</ssl>
+                <void_on_order_cancellation>0</void_on_order_cancellation>
+                <privateInfoKeys>PaymentID,AcquirerAVSResponseCode,AcquirerCVVResponseCode,AcquirerApprovalCode,AcquirerResponseCode,cc_type,cc_number,AcquirerResponseCodeText</privateInfoKeys>
+                <paymentInfoKeys>PaymentID,AcquirerAVSResponseCode,AcquirerCVVResponseCode,AcquirerApprovalCode,AcquirerResponseCode,cc_number,cc_type,AcquirerResponseCodeText</paymentInfoKeys>
+                <session_tag_api>GetSessionTags</session_tag_api>
+                <charge_sale_api>ChargePaymentRequest</charge_sale_api>
+                <authorize_sale_api>ChargePaymentRequest</authorize_sale_api>
+                <authorize_confirm_api>Disposition</authorize_confirm_api>
+                <reverse_payment_api>ReversePaymentRequest</reverse_payment_api>
+                <validate_charge_api>ValidateAccountNumber</validate_charge_api>
+                <payment_status_api>GetPaymentStatus</payment_status_api>
+                <vesta_temp_token_api>ChargeAccountToTemporaryToken</vesta_temp_token_api>
+                <sandbox_vesta_token_url>https://vsafesandboxtoken.ecustomersupport.com/GatewayV4ProxyJSON/Service</sandbox_vesta_token_url>
+                <production_vesta_token_url>https://vsafe1token.ecustomerpayments.com/GatewayV4ProxyJSON/Service</production_vesta_token_url>
+            </vesta_payment>
+            <vesta_cc_vault>
+                <model>VestaCreditCardVaultFacade</model>
+                <title>Stored Cards(Vesta)</title>
+            </vesta_cc_vault>
+        </payment>
+    </default>
+</config>
