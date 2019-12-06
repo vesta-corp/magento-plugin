@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="RiskInformation">
+        <xs:annotation>
+            <xs:documentation>vSafe Risk Information Schema version 2.0 Draft 5</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Transaction" type="TransactionType"/>
+            </xs:sequence>
+            <xs:attribute name="version" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="2\.\d+(\.\d+)?"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="TransactionType">
+        <xs:sequence>
+            <xs:element name="Purchaser" type="PurchaserType" minOccurs="0"/>
+            <xs:element name="Channel" type="ChannelType" minOccurs="0"/>
+            <xs:element name="Promotion" type="PromotionType" minOccurs="0"/>
+            <xs:element name="TimeStamp" type="DateTimeType" minOccurs="0"/>
+            <xs:element name="MerchantOrderID" type="xs:string" minOccurs="0"/>
+            <xs:element name="Billing" type="BillingType" minOccurs="0"/>
+            <xs:element name="ShoppingCart" type="ShoppingCartType" minOccurs="0"/>
+            <xs:element name="CustomMerchantData" type="CustomMerchantDataType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BillingType">
+        <xs:sequence>
+            <xs:element name="BillingPhoneNumber" type="PhoneNumberType" minOccurs="0"/>
+            <xs:element name="Email" type="EmailType" minOccurs="0"/>
+            <xs:element name="PaymentDetails" type="PaymentDetailsType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AddressType">
+        <xs:sequence>
+            <xs:element name="AddressLine1" type="xs:string"/>
+            <xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="Region" type="xs:string" minOccurs="0"/>
+            <xs:element name="PostalCode" type="xs:string"/>
+            <xs:element name="CountryCode" type="CountryCodeType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="PhoneNumberType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{15}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PromotionType">
+        <xs:sequence>
+            <xs:element name="Discount" type="xs:decimal"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="Code" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="DateTimeType">
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern value=".+T.+(Z|[+\-].+)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PurchaserType">
+        <xs:sequence>
+            <xs:element name="Account" type="AccountType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AccountType">
+        <xs:sequence>
+            <xs:element name="AccountID" type="xs:string" minOccurs="0"/>
+            <xs:element name="CreatedDTM" type="DateTimeType" minOccurs="0"/>
+            <xs:element name="DOB" type="xs:date" minOccurs="0"/>
+            <xs:element name="isEmailVerified" type="booleanOrNull" minOccurs="0"/>
+            <xs:element name="isPhoneVerified" type="booleanOrNull" minOccurs="0"/>
+            <xs:element name="Email" type="EmailType" minOccurs="0"/>
+            <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="LastName" type="xs:string" minOccurs="0"/>
+            <xs:element name="AddressLine1" type="xs:string" minOccurs="0"/>
+            <xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+            <xs:element name="City" type="xs:string" minOccurs="0"/>
+            <xs:element name="CountryCode" type="CountryCodeType" minOccurs="0"/>
+            <xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="Region" type="xs:string" minOccurs="0"/>
+            <xs:element name="CurrentBalance" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="PhoneNumber" type="PhoneNumberType" minOccurs="0"/>
+            <xs:element name="SocialNetwork" type="SocialNetworkType" minOccurs="0" maxOccurs="5"/>
+            <xs:element name="isAddressValidated" type="booleanOrNull" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SocialNetworkType">
+        <xs:sequence>
+            <xs:element name="Email" type="EmailType" minOccurs="0"/>
+            <xs:element name="AccountID" type="xs:string" minOccurs="0"/>
+            <xs:element name="Platform" type="xs:string">
+<!--
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Facebook"/>
+                        <xs:enumeration value="GooglePlus"/>
+                        <xs:enumeration value="Twitter"/>
+                        <xs:enumeration value="Instagram"/>
+                        <xs:enumeration value="YouTube"/>
+                        <xs:enumeration value="Ozone"/>
+                        <xs:enumeration value="Weibo"/>
+                        <xs:enumeration value="Other"/>
+                    </xs:restriction>
+                </xs:simpleType>
+-->
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="EmailType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".+@.+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CountryCodeType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ChannelType">
+        <xs:sequence>
+            <xs:element name="ANI" type="PhoneNumberType" minOccurs="0"/>
+            <xs:element name="IPAddress" type="IPAddressType" minOccurs="0"/>   <!-- IPv4 or v6? -->
+            <xs:element name="MerchantChannelCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="MerchantChannelDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="MerchantSubChannelCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="VestaChannelCode" type="VestaChannelCodeType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="VestaChannelCodeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="WEB"/>
+            <xs:enumeration value="IVR"/>
+            <xs:enumeration value="MOBILE"/>
+            <xs:enumeration value="MRC"/>
+            <xs:enumeration value="CSR"/>
+            <xs:enumeration value="OTHER"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+    <xs:complexType name="CrossBorderFulfillmentType">
+        <xs:sequence>
+            <xs:element name="ExchangeRate" minOccurs="0"/>
+            <xs:element name="ReceiveAmount" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="ReceiveCurrency" type="xs:string" minOccurs="0"/>
+            <xs:element name="SendAmount" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="SendCurrency" type="xs:string" minOccurs="0"/>
+            <xs:element name="Payout" type="PayoutType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PayoutType">
+        <xs:sequence>
+            <xs:element name="City" type="xs:string" minOccurs="0"/>
+            <xs:element name="CountryCode" type="CountryCodeType" minOccurs="0"/>
+            <xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="Region" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PaymentDetailsType">
+        <xs:sequence>
+            <xs:element name="isPDOF" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ShoppingCartType">
+        <xs:sequence>
+            <xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="200"/>
+        </xs:sequence>
+        <xs:attribute name="DeliveryCount" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DeliveryType">
+        <xs:sequence>
+            <xs:element name="DeliveryInfo" type="DeliveryInfoType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="LineItem" type="LineItemType" minOccurs="0" maxOccurs="200"/>
+        </xs:sequence>
+        <xs:attribute name="LineItemCount" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="LineItemType">
+        <xs:sequence>
+            <xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="Quantity" type="xs:integer" minOccurs="0"/>
+            <xs:element name="UnitPrice" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="Promotion" type="LineItemPromotionType" minOccurs="0"/>
+            <xs:element name="GiftCards" type="GiftCardsType" minOccurs="0"/>
+            <xs:element name="TravelRoute" type="TravelRouteType" minOccurs="0"/>
+            <xs:element name="Event" type="EventType" minOccurs="0"/>
+            <xs:element name="DiverseCart" type="DiverseCartType" minOccurs="0"/>
+            <xs:element name="Seller" type="SellerType" minOccurs="0"/>
+            <xs:element name="CrossBorderFulfillment" type="CrossBorderFulfillmentType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="LineItemPromotionType">
+        <xs:sequence>
+            <xs:element name="Discount" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="Code" type="xs:string" minOccurs="0"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GiftCardsType">
+        <xs:sequence>
+            <xs:element name="From" type="xs:string" minOccurs="0"/>
+            <xs:element name="Text" type="xs:string" minOccurs="0"/>
+            <xs:element name="To" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TravelRouteType">
+        <xs:sequence>
+            <xs:element name="Carrier" type="xs:string" minOccurs="0"/>
+            <xs:element name="DepartureDTM" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="ArrivalDTM" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="Destination" type="xs:string" minOccurs="0"/>
+            <xs:element name="FareClass" type="xs:string" minOccurs="0"/>
+            <xs:element name="Origin" type="xs:string" minOccurs="0"/>
+            <xs:element name="Traveler" type="TravelerType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SellerType">
+        <xs:sequence>
+            <xs:element name="NumberPriorSales" type="xs:nonNegativeInteger" minOccurs="0"/>
+            <xs:element name="ItemCreatedDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="Account" type="AccountType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TravelerType">
+        <xs:sequence>
+            <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="LastName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DeliveryInfoType">
+        <xs:sequence>
+            <xs:element name="DeliveryMethod">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Print"/>
+                        <xs:enumeration value="WillCall"/>
+                        <xs:enumeration value="Delay"/>
+                        <xs:enumeration value="Other"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ShippingCarrier" type="xs:string" minOccurs="0"/>
+            <xs:element name="TargetShipDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="ShippingClass" type="xs:string" minOccurs="0"/>
+            <xs:element name="ShippingCost" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="PickupLocation" type="xs:string" minOccurs="0"/>
+            <xs:element name="PickupDeliveryTime" type="xs:string" minOccurs="0"/>
+            <xs:element name="Company" type="xs:string" minOccurs="0"/>
+            <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="LastName" type="xs:string" minOccurs="0"/>
+            <xs:element name="AddressLine1" type="xs:string" minOccurs="0"/>
+            <xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+            <xs:element name="City" type="xs:string" minOccurs="0"/>
+            <xs:element name="Region" type="xs:string" minOccurs="0"/>
+            <xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="CountryCode" type="CountryCodeType" minOccurs="0"/>
+            <xs:element name="PhoneNumber" type="PhoneNumberType" minOccurs="0"/>
+            <xs:element name="Email" type="EmailType" minOccurs="0"/>
+            <xs:element name="SubscriberKey" type="xs:string" minOccurs="0"/>
+            <xs:element name="AccountID" type="xs:string" minOccurs="0"/>
+            <xs:element name="isAddressValidated" type="booleanOrNull" minOccurs="0"/>
+            <xs:element name="isEmailValidated" type="booleanOrNull" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="IPAddressType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:complexType name="EventType">
+        <xs:sequence>
+            <xs:element name="Location" type="xs:string" minOccurs="0"/>
+            <xs:element name="EventType" type="xs:string" minOccurs="0"/>
+            <xs:element name="EventCategory" type="xs:string" minOccurs="0"/>
+            <xs:element name="EventDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="StartDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="NumberOfOccurences" type="xs:nonNegativeInteger" minOccurs="0"/>
+            <xs:element name="CreatedDate" type="xs:date" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CustomMerchantDataType">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax">
+                <xs:annotation>
+                    <xs:documentation>Reserved for custom processing per partner. Replace this section if you received custom merchant data code</xs:documentation>
+                </xs:annotation>
+            </xs:any>
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="\d+(\.\d+)?"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="DiverseCartType">
+        <xs:sequence>
+            <xs:element name="SKU" type="xs:string" minOccurs="0"/>
+            <xs:element name="ProductType" type="xs:string" minOccurs="0"/>
+            <xs:element name="Category" type="xs:string" minOccurs="0"/>
+            <xs:element name="SubCategory" type="xs:string" minOccurs="0"/>
+            <xs:element name="Brand" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+
+    </xs:complexType>
+    <xs:simpleType name="booleanOrNull">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FALSE"/>
+            <xs:enumeration value="TRUE"/>
+            <xs:enumeration value="NULL"/>
+            <xs:enumeration value="false"/>
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="null"/>
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

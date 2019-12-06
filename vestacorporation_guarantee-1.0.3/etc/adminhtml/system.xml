@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/system_file.xsd">
+	<system>
+		<tab id="vestaprotection" translate="label" sortOrder="10">
+			<label>Vesta Guarantee</label>
+		</tab>
+		<section id="vesta_protection" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>Configuration</label>
+			<tab>vestaprotection</tab>
+			<resource>Vesta_Guarantee::vesta_protection</resource>
+			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>General Configuration</label>
+				<field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Module Enable</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="environment_type" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Environment Type</label>
+					<source_model>Vesta\Guarantee\Model\Adminhtml\Source\EnvironmentType</source_model>
+					<depends>
+                        <field id="enable">1</field>
+                    </depends>
+				</field>
+				<!-- Sandbox environment fields start-->
+				<field id="sandbox_account_name" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Sandbox Account Name</label>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">sandbox</field>
+                    </depends>
+				</field>
+				<field id="sandbox_password" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Sandbox Password</label>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">sandbox</field>
+                    </depends>
+				</field>
+				<field id="sandbox_end_point_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Sandbox Guarantee API End Point URL</label>
+					<validate>required-entry validate-url</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">sandbox</field>
+                    </depends>
+					<comment><![CDATA[Add / at the end of API URL. ]]></comment>
+				</field>
+				<field id="sandbox_datacollector_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Sandbox Data Collector</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">sandbox</field>
+                    </depends>
+					<comment><![CDATA[Add / at the end of API URL. ]]></comment>
+				</field>
+				<field id="sandbox_merchant_routing_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Sandbox MerchantRoutingID</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">sandbox</field>
+                    </depends>
+				</field>
+				<!-- Sandbox environment fields end-->
+				<!-- Production environment fields start-->
+				<field id="production_account_name" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Production Account Name</label>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">production</field>
+                    </depends>
+				</field>
+				<field id="production_password" translate="label" type="obscure" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Production Password</label>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">production</field>
+                    </depends>
+				</field>
+				<field id="production_end_point_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Production Guarantee API End Point URL</label>
+					<validate>required-entry validate-url</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">production</field>
+                    </depends>
+					<comment><![CDATA[Add / at the end of API URL. ]]></comment>
+				</field>
+				<field id="production_datacollector_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Production Data Collector</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">production</field>
+                    </depends>
+					<comment><![CDATA[Add / at the end of API URL. ]]></comment>
+				</field>
+				<field id="production_merchant_routing_id" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Production MerchantRoutingID</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+						<field id="environment_type">production</field>
+                    </depends>
+				</field>
+				<!-- Production environment fields ended-->
+				<field id="autodisposition" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Auto Disposition</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+				</field>
+				<field id="acquirer_cd" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Acquirer CD</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+				</field>
+				<group id="capture_parameters" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Payment Capture Parameters</label>
+				<comment><![CDATA[Capture the payment on the basis of Risk Probability Index. This setting will work only if Payment Action is set to "Authorize" mode under enabled payment methods.]]></comment>
+				<field id="capture_lowrisk_payment" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Capture Low Risk Payments</label>
+					<comment>If Vesta Risk Index is greater than 4</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+				</field>
+				<field id="capture_mediumrisk_payment" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Capture Medium Risk Payments</label>
+					<comment>If Vesta Risk Index is between 3 and 4</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="enable">1</field>
+                    </depends>
+				</field>
+				<field id="cancel_highrisk_order" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Capture High Risk Payments</label>
+					<comment>If Vesta Risk Index is less than 3</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="enable">1</field>
+                    </depends>
+				</field>
+				</group>
+				
+			</group>
+		</section>
+	</system>
+</config>
