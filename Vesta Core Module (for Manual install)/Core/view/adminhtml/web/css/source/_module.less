@@ -1,0 +1,17 @@
+@menu-icons-admin__font-name-path: '@{baseDir}Vesta_Core/fonts/icon';
+@menu-icons-admin__font-name : 'Core';
+.lib-font-face(
+  @family-name:@menu-icons-admin__font-name,
+  @font-path: @menu-icons-admin__font-name-path,
+  @font-weight: normal,
+  @font-style: normal
+);
+#menu-vesta-core-menu > a:before{
+	font-family: 'Core';
+    content: '\0034';
+    display: block;
+    font-size: 4.8rem;
+    height: 4.2rem;
+    margin-bottom: 0.3rem;
+    margin-top: -10px;
+}

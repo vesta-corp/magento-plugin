@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Vesta_Core::menu" title="Vesta Extensions" sortOrder="50">
+                    <resource id="Vesta_Core::documentation" title="Documentations" sortOrder="50">
+                        <resource id="Vesta_Core::userguide" title="User Guides" sortOrder="50"/>
+                    </resource>
+                    <resource id="Vesta_Core::activate" title="Active Module" sortOrder="70"/>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Vesta_Core::configuration" title="Vesta Information" sortOrder="10"/>
+                            <resource id="Vesta_Core::marketplace" title="Vesta Marketplace" sortOrder="10"/>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

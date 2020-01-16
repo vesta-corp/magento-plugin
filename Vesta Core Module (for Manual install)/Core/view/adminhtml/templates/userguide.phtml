@@ -1,0 +1,65 @@
+<div class="user-guide">
+<?php
+if ($block->isVestaPaymentActive()) {
+    ?>
+<div class="page-main-actions">
+   <h3>Vesta Payment User Manual</h3>
+</div>
+<h4>Vesta Payment Module Configuration Guide:</h4>
+<ol>
+  <li>Browse to Stores >> Configuration >> Sales >> Payment Methods >> Vesta Payment</li>
+  <li>Configure your module with provided access
+  <br><img class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/configuration.png')); ?>"></li>
+</ol> 
+    <?php
+} if ($block->isVestaGuaranteeActive()) {
+    ?>
+
+<div class="page-main-actions">
+   <h3>Vesta Guarantee User Manual</h3>
+   </div>
+   
+<h4>Vesta Guarantee Module Configuration Guide:</h4>
+
+<p>Module Configuration</p>
+<ol>
+  <li>Browse to Stores >> Configuration >>Vesta Guarantee >> Configuration</br>
+  <img class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/Configuration1.png')); ?>"></li>
+  
+  <li>Guarantee Logs</br>
+  Browse to Vesta Guarantee Logs </br>
+  <img class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/Configuration2.png')); ?>">
+  </li>
+  
+  <li>Vesta Guarantee In Orders<br> 
+  Here you can see Vesta Guarantee Decision Status and Vesta Risk Probability Index<br> 
+   <img class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/Configuration3.png')); ?>">
+   </li>
+   
+    <li>Vesta Guarantee In Order Detail<br> 
+    Browse to Sales >> Orders >> Click on View Detail >> Vesta Guarantee Tab</br>
+   <img class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/Configuration4.png')); ?>">
+   </li>
+   
+     <li>Change Response Messages In Module language File.<br> 
+     Browse to Guarantee Module >> i18n Open specific file in csv format</br>
+
+   <img style="width: 300px;" class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/Configuration5.png')); ?>">
+   </br>
+    <img class="install" src="<?php echo $block->escapeUrl($block->getViewFileUrl('Vesta_Core/images/Configuration6.png')); ?>">
+   </li>
+   </ol>
+<?php } ?>   
+</div>
+
+<style>
+.user-guide h3{margin:0 0 0.5rem !important;} .user-guide ol{padding-left: 25px;}
+img.install {border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 700px; margin: 20px 0 20px;}
+img.install:hover {box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
+.user-guide ol li{
+    margin: 0 0 10px 0;
+}
+pre{
+    margin:2px 0 2px 0px;
+}
+</style>
